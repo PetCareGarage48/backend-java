@@ -38,6 +38,11 @@ public class PetServiceImpl implements PetService {
         return petRepository.findByName(name);
     }
 
+    @Override
+    public Iterable<Pet> findAll() {
+        return petRepository.findAll();
+    }
+
     public Page<Pet> findPets(int count, Pageable pageable) {
         return petRepository.findPets(count, pageable);
     }

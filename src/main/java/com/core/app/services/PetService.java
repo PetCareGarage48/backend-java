@@ -17,6 +17,8 @@ public interface PetService {
 
     List<Pet> findByName(String name);
 
+    Iterable<Pet> findAll();
+
     Page<Pet> findPets(int count, Pageable pageable);
 
 

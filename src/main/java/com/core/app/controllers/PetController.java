@@ -2,38 +2,39 @@ package com.core.app.controllers;
 
 
 import com.core.app.entities.database.pet.Pet;
+import com.core.app.entities.dto.Response;
 import com.core.app.services.PetService;
+import com.core.app.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping(value = "/pet")
+@RequestMapping(value = "/v1/pets")
 public class PetController {
 
     @Autowired
     private PetService petService;
 
     @GetMapping
-    public ResponseEntity findPets(int count, Pageable pageable) {
-        return new ResponseEntity<>(petService.findPets(count, pageable), OK);
+    public ResponseEntity<Response> findAllPets() {
+        Iterable<Pet> pets = petService.findAll();
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity update(@RequestBody Pet pet) {
-        // petService.update(pet);
-        return new ResponseEntity<>(OK);
+    @PutMapping("/pet")
+    public ResponseEntity<Response> update(@RequestBody Pet pet) {
+        Pet updatedPet = petService.save(pet);
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "Pet is updated", updatedPet);
     }
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody Pet pet) {
-        petService.save(pet);
-        return new ResponseEntity(OK);
+    @PostMapping("/pet")
+    public ResponseEntity<Response> save(@RequestBody Pet pet) {
+        Pet savedPet = petService.save(pet);
+        return Helper.buildHttpResponse(HttpStatus.CREATED, false, "Pet is created", savedPet);
     }
 
 }

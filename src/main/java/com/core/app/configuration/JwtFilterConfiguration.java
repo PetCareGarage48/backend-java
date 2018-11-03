@@ -110,7 +110,9 @@ public class JwtFilterConfiguration extends GenericFilterBean {
 				requestUriContains(request, "/v1/shelter/admins/register") ||
 				requestUriContains(request, "/v1/shelters") ||
 				requestUriContains(request, "/v1/shelters/shelter") ||
-				requestUriContains(request, "/v1/test"));
+                requestUriContains(request, "/v1/pets") ||
+                requestUriContains(request, "/v1/test"));
+
 	}
 
 	private boolean isAccessibleForAdminOnly(HttpServletRequest request) {

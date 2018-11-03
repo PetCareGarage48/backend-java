@@ -1,5 +1,7 @@
 package com.core.app.entities.database.shelter;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.mongodb.client.model.geojson.Point;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class Shelter {
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
     private String title;
     private Point location;

@@ -2,6 +2,8 @@ package com.core.app.entities.database.pet;
 
 import com.core.app.entities.database.user.Adoption;
 import com.core.app.entities.enums.Gender;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class Pet {
 
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
     private ObjectId shelterId;
     private String name;
