@@ -15,7 +15,12 @@ import java.util.List;
 public class PetServiceImpl implements PetService {
 
     @Autowired
-    private PetRepository petRepository;
+    private final PetRepository petRepository;
+
+    public PetServiceImpl(PetRepository petRepository) {
+        this.petRepository = petRepository;
+    }
+
 
     public Pet save(Pet pet) {
         return petRepository.save(pet);
@@ -26,7 +31,7 @@ public class PetServiceImpl implements PetService {
     }
 
     public List<Pet> findByShelter(ObjectId objectId) {
-        return petRepository.findByShelter(objectId);
+        return petRepository.findByShelterId(objectId);
     }
 
     public List<Pet> findByName(String name) {

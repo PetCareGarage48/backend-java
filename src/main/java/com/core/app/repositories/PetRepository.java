@@ -15,7 +15,7 @@ public interface PetRepository extends PagingAndSortingRepository<Pet, ObjectId>
 
     List<Pet> findByName(String name);
 
-    List<Pet> findByShelter(ObjectId shelterId);
+    List<Pet> findByShelterId(ObjectId shelterId);
 
     @Query(value="{'$sample': ?0}")
     Page<Pet> findPets(int count, Pageable pageable);
