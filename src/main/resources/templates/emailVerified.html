@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link lang="en-US" xmlns:th="http://www.thymeleaf.org"/>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>App | Email Verification</title>
+</head>
+<body>
+    <div>
+        <img id="icon-logo" th:src="@{/images/oril_logo.png}"/>
+    </div>
+    <div class="logo">
+        <h1>Template Application</h1>
+    </div>
+    <div class="message-container">
+        <h1 th:text="${result.message}"></h1>
+    </div>
+    <div class="message-container">
+        <a th:if="${result.message == 'Verification link is expired. Please, request the new one'}"
+           th:href="@{${result.data}}"
+           class="resend-verification-link">Resend Link</a>
+    </div>
+
+</body>
+</html>

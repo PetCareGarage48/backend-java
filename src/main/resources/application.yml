@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: default
+  output:
+    ansi:
+      enabled: ALWAYS
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/demo-app
+  mail:
+    verificationUrl: http://localhost:8080/users/verify/account/
+    resendVerificationUrl: http://localhost:8080/users/verify/account/resend/email/
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+server:
+  port: 8080
+admin:
+  email: admin@app.com
+  password: appAdmin2018

@@ -1,0 +1,9 @@
+package com.core.app.repositories;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface Donation extends MongoRepository <Donation, ObjectId> {
+}

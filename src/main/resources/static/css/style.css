@@ -1,0 +1,57 @@
+body {
+    color: #14467d;
+    padding: 4em;
+}
+
+.message-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+.message-container h1 {
+    font-family: metropolis-semibold;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    font-size: 5em;
+}
+
+.logo h1 {
+    margin: 0;
+    font-family: metropolis-bold;
+    color: #000000;
+    letter-spacing: 10px;
+}
+
+#icon-logo {
+    width: 100px;
+}
+
+.resend-verification-link {
+    cursor: pointer;
+    background-color: #14467d;
+    color: white;
+    height: 35px;
+    width: 175px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 10px;
+}
+
+@font-face {
+  font-family: metropolis-bold;
+  src: url('../fonts/Metropolis-Bold.otf');
+}
+
+@font-face {
+  font-family: metropolis-semibold;
+  src: url('../fonts/Metropolis-SemiBold.otf');
+}
