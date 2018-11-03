@@ -37,8 +37,6 @@ public class Helper {
 
 	public static ResponseEntity<Response> buildHttpResponse(HttpStatus httpStatus, boolean error, String msg, Object data) {
 		Response responseBody = Response.builder()
-				.status(httpStatus.value())
-				.error(error)
 				.message(msg)
 				.data(data)
 				.build();

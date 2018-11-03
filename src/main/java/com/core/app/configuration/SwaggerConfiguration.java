@@ -18,17 +18,16 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.any())
-				.build()
-				.apiInfo(metaInfo());
+				.build();
 	}
 
 	private ApiInfo metaInfo() {
 		return new ApiInfo(
-				"Template Application",
-				"API Documentation for Template Application",
+				"Pet Care",
+				"API Documentation Pet Care",
 				"1.0.0",
-				"Template Application",
-				new Contact("Oril", "", "developer@orilinc.com"),
+				"Pet Care Application",
+				new Contact("PetCare", "", ""),
 				"",
 				""
 		);

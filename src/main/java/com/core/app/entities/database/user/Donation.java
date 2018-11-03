@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 public class Donation {
+
     private ObjectId id;
     private int sum;
     private ObjectId shelterId;

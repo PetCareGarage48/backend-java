@@ -25,6 +25,7 @@ public class Pet {
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId shelterId;
     private String name;
     private String description;

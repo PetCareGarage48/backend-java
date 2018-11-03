@@ -19,7 +19,7 @@ public class GlobalAppSettingsServiceImpl implements GlobalAppSettingsService {
 
 	@Override
 	public GlobalAppSettings initializeAppSettings() {
-		return getAppSettings() == null ? saveAppSettings() : null;
+		return saveAppSettings();
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class GlobalAppSettingsServiceImpl implements GlobalAppSettingsService {
 	private GlobalAppSettings buildSettings() {
 		return GlobalAppSettings
 				.builder()
-					.emailVerificationEnabled(GeneralConstants.FALSE)
+				.emailVerificationEnabled(GeneralConstants.FALSE)
 				.build();
 	}
 }

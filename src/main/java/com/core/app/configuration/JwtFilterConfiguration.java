@@ -2,7 +2,7 @@ package com.core.app.configuration;
 
 import com.auth0.jwt.JWT;
 import com.core.app.entities.Role;
-import com.core.app.services.ShelterTokenService;
+import com.core.app.services.TokenService;
 import com.core.app.utils.Helper;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ import static com.core.app.constants.HttpConstants.*;
 @Configuration
 public class JwtFilterConfiguration extends GenericFilterBean {
 
-	private final ShelterTokenService tokenService;
-
+	private final TokenService tokenService;
 
 	@Autowired
-			JwtFilterConfiguration(ShelterTokenService tokenService) {
+	public JwtFilterConfiguration(TokenService tokenService) {
 		this.tokenService = tokenService;
 	}
+
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
@@ -69,7 +69,7 @@ public class JwtFilterConfiguration extends GenericFilterBean {
 			if (isAccessibleForAdminOnly(request)) {
 				handleAccessToAdminRoutes(chain, request, response, token);
 			} else {
-				ObjectId userId = this.tokenService.getShelterIdFromToken(token);
+				ObjectId userId = this.tokenService.getUserIdFromToken(token);
 				request.setAttribute(USER_ID, userId);
 				chain.doFilter(request, response);
 				tokenService.updateTokenExpirationTime(token);
@@ -81,7 +81,7 @@ public class JwtFilterConfiguration extends GenericFilterBean {
 
 	private void handleAccessToAdminRoutes(FilterChain chain, HttpServletRequest request, HttpServletResponse response, String token) throws IOException, ServletException {
 		if (isAdmin(JWT.decode(token).getClaim(USER_ROLE).asString())) {
-			ObjectId userId = this.tokenService.getShelterIdFromToken(token);
+			ObjectId userId = this.tokenService.getUserIdFromToken(token);
 			request.setAttribute(USER_ID, userId);
 			chain.doFilter(request, response);
 			tokenService.updateTokenExpirationTime(token);
@@ -106,17 +106,16 @@ public class JwtFilterConfiguration extends GenericFilterBean {
 				requestUriContains(request,"/css") ||
 				requestUriContains(request,"/fonts") ||
 				requestUriContains(request, "/favicon") ||
-				requestUriContains(request, "/v1/shelter/admins/login") ||
-				requestUriContains(request, "/v1/shelter/admins/register") ||
-				requestUriContains(request, "/v1/shelters") ||
-				requestUriContains(request, "/v1/shelters/shelter") ||
+				requestUriContains(request, "/v1/users/login") ||
+				requestUriContains(request, "/v1/users/register") ||
                 requestUriContains(request, "/v1/pets") ||
-                requestUriContains(request, "/v1/test"));
-
+				requestUriContains(request, "/initialize") ||
+				requestUriContains(request, "/v1/test"));
 	}
 
 	private boolean isAccessibleForAdminOnly(HttpServletRequest request) {
-		return requestUriContains(request, "/admin");
+		return  requestUriContains(request, "/v1/shelters/shelter") ||
+				requestUriContains(request, "/admin");
 	}
 
 	private boolean isAdmin(String role) {
@@ -130,8 +129,4 @@ public class JwtFilterConfiguration extends GenericFilterBean {
 	private boolean requestUriEquals(HttpServletRequest request, String route) {
 		return request.getRequestURI().equals(route);
 	}
-
-
-
-
 }
