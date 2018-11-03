@@ -1,4 +1,4 @@
-package com.core.app.entities.database.shelter;
+package com.core.app.entities.database.pet;
 
 import com.core.app.entities.database.user.Adoption;
 import com.core.app.entities.enums.Gender;
@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.omg.CORBA.Object;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,14 +22,12 @@ public class Pet {
 
     @Id
     private ObjectId id;
+    private ObjectId shelterId;
     private String name;
     private String description;
     private String type;
     private Gender gender;
-    private String breed;
-    private ObjectId shelterId;
     private int age;
-    private ArrayList<String> skills;
     private ArrayList<String> photos;
     private ArrayList<Adoption> adoptions;
 }
