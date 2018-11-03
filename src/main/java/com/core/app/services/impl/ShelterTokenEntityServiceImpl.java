@@ -13,6 +13,7 @@ import com.core.app.services.ShelterTokenService;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -21,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 import static com.core.app.constants.GeneralConstants.SHELTER_ID;
 import static com.core.app.constants.GeneralConstants.TOKEN_SECRET;
 
+@Service
 public class ShelterTokenEntityServiceImpl implements ShelterTokenService {
 
     private final ShelterTokenRepository shelterTokenRepository;

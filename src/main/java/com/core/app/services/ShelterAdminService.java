@@ -2,6 +2,7 @@ package com.core.app.services;
 
 import com.core.app.entities.database.shelter.ShelterAdmin;
 import com.core.app.entities.dto.Response;
+import com.core.app.entities.dto.UserCredentials;
 import com.core.app.repositories.ShelterAdminRepository;
 import org.springframework.http.ResponseEntity;
 
@@ -13,7 +14,7 @@ public interface ShelterAdminService {
 
     ResponseEntity<Response> register(ShelterAdmin user);
 
-    ResponseEntity<Response> login(ShelterAdmin credentials);
+    ResponseEntity<Response> login(UserCredentials credentials);
 
     ResponseEntity<Response> logout(String token);
 

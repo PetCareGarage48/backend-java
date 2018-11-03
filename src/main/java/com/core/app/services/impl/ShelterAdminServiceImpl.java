@@ -1,14 +1,15 @@
 package com.core.app.services.impl;
 
+import com.core.app.entities.database.shelter.Shelter;
 import com.core.app.entities.database.shelter.ShelterAdmin;
 import com.core.app.entities.database.shelter.ShelterTokenEntity;
 import com.core.app.entities.database.user.GlobalAppSettings;
-import com.core.app.entities.database.user.TokenEntity;
 import com.core.app.entities.dto.Response;
+import com.core.app.entities.dto.UserCredentials;
 import com.core.app.repositories.ShelterAdminRepository;
-import com.core.app.repositories.ShelterTokenRepository;
 import com.core.app.services.GlobalAppSettingsService;
 import com.core.app.services.ShelterAdminService;
+import com.core.app.services.ShelterService;
 import com.core.app.services.ShelterTokenService;
 import com.core.app.utils.Helper;
 import org.bson.types.ObjectId;
@@ -29,12 +30,14 @@ public class ShelterAdminServiceImpl implements ShelterAdminService {
     private final ShelterAdminRepository shelterAdminRepository;
     private final GlobalAppSettingsService settingsService;
     private final ShelterTokenService shelterTokenEntityService;
+    private final ShelterService shelterService;
 
     @Autowired
-    public ShelterAdminServiceImpl(ShelterAdminRepository shelterAdminRepository, GlobalAppSettings getAppSettings, GlobalAppSettingsService settingsService, ShelterTokenRepository shelterTokenRepository, ShelterTokenEntityServiceImpl shelterTokenEntityService) {
+    public ShelterAdminServiceImpl(ShelterAdminRepository shelterAdminRepository, GlobalAppSettingsService settingsService, ShelterTokenService shelterTokenEntityService, ShelterService shelterService) {
         this.shelterAdminRepository = shelterAdminRepository;
         this.settingsService = settingsService;
         this.shelterTokenEntityService = shelterTokenEntityService;
+        this.shelterService = shelterService;
     }
 
 
@@ -55,6 +58,7 @@ public class ShelterAdminServiceImpl implements ShelterAdminService {
     @Override
     public ResponseEntity<Response> register(ShelterAdmin admin) {
         GlobalAppSettings appSettings = settingsService.getAppSettings();
+        admin.setPassword(Helper.hashPassword(admin.getPassword()));
         admin.setEmail(emailToLowerCase(admin));
         return !shelterAdminExists(admin.getEmail())
                 ? proceedRegistration(appSettings, admin)
@@ -62,7 +66,7 @@ public class ShelterAdminServiceImpl implements ShelterAdminService {
     }
 
     @Override
-    public ResponseEntity<Response> login(ShelterAdmin credentials) {
+    public ResponseEntity<Response> login(UserCredentials credentials) {
         ShelterAdmin admin  = shelterAdminRepository.findByEmail(credentials.getEmail().toLowerCase());
         if (admin == null) {
             return Helper.buildHttpResponse(HttpStatus.NOT_FOUND, TRUE, INVALID_CREDENTIALS, 1);
@@ -100,9 +104,12 @@ public class ShelterAdminServiceImpl implements ShelterAdminService {
     }
 
     private ResponseEntity<Response> registerWithoutEmailVerification(ShelterAdmin admin) {
+        Shelter shelter = shelterService.save(new Shelter());
+        admin.setShelterId(shelter.getId());
         shelterAdminRepository.save(admin);
         String token = shelterTokenEntityService.createToken(admin);
         ShelterTokenEntity tokenEntity = shelterTokenEntityService.save(token, admin.getId());
+
         return tokenEntity != null
                 ? Helper.buildHttpResponse(HttpStatus.OK, FALSE, USER_REGISTERED, token)
                 : Helper.buildHttpResponse(HttpStatus.SERVICE_UNAVAILABLE, TRUE, DATA_SAVING_FAILURE, null);
