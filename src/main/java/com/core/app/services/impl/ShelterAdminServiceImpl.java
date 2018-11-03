@@ -104,7 +104,7 @@ public class ShelterAdminServiceImpl implements ShelterAdminService {
     }
 
     private ResponseEntity<Response> registerWithoutEmailVerification(ShelterAdmin admin) {
-        Shelter shelter = shelterService.save(new Shelter());
+        Shelter shelter = shelterService.save(shelterService.buildShelter());
         admin.setShelterId(shelter.getId());
         shelterAdminRepository.save(admin);
         String token = shelterTokenEntityService.createToken(admin);

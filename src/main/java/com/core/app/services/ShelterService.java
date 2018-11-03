@@ -10,4 +10,5 @@ public interface ShelterService {
     void delete(Shelter shelter);
     Optional<Shelter> findById(ObjectId id);
     Iterable<Shelter> findAll();
+    Shelter buildShelter();
 }
