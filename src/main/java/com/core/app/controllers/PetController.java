@@ -30,7 +30,7 @@ public class PetController {
         return new ResponseEntity<>(OK);
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity save(@RequestBody Pet pet) {
         petService.save(pet);
         return new ResponseEntity(OK);

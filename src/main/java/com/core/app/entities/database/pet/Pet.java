@@ -27,10 +27,7 @@ public class Pet {
     private String description;
     private String type;
     private Gender gender;
-    private String breed;
-    private ObjectId shelterId;
     private int age;
-    private ArrayList<String> skills;
     private ArrayList<String> photos;
     private ArrayList<Adoption> adoptions;
 }
