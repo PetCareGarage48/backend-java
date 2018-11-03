@@ -14,6 +14,7 @@ public class GeneralConstants {
 	public static final String USERS = "users";
 	public static final String APP_SETTINGS = "app_settings";
 	public static final String TOKENS = "tokens";
+	public static final String SHELTER_TOKENS = "shelter-tokens";
 
 	/*GENERAL FIELDS*/
 	public static final String PAGE = "page";
@@ -27,6 +28,7 @@ public class GeneralConstants {
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String QUESTION_MARK = "?";
 	public static final String USER_ID = "userId";
+	public static final String SHELTER_ID = "shelterId";
 	public static final String USER_ROLE = "userRole";
 	public static final String PASSWORD = "password";
 	public static final int HOURS_FOR_EMAIL_VERIFICATION = 24;

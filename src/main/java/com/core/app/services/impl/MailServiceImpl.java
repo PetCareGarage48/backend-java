@@ -1,6 +1,6 @@
 package com.core.app.services.impl;
 
-import com.core.app.entities.database.User;
+import com.core.app.entities.database.user.User;
 import com.core.app.services.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class MailServiceImpl implements MailService {
 		try {
 			MimeMessage mail = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mail, TRUE);
-			helper.setTo(user.getEmail());
+//			helper.setTo(user.getEmail());
 			helper.setFrom(senderEmail);
 			helper.setSubject(SIGN_UP_CONFIRMATION_SUBJECT);
 			helper.setText(buildSignUpConfirmationMessage(user), TRUE);
@@ -59,7 +59,7 @@ public class MailServiceImpl implements MailService {
 		try {
 			MimeMessage mail = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mail, TRUE);
-			helper.setTo(user.getEmail());
+//			helper.setTo(user.getEmail());
 			helper.setFrom(senderEmail);
 			helper.setSubject(SIGN_UP_COMPLETED_SUBJECT);
 			helper.setText(buildSignUpCompletedMessage(user), TRUE);
@@ -72,9 +72,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	private String buildSignUpCompletedMessage(User user) {
-		String receiver = (user.getFirstName() != null && user.getLastName() != null)
-				? user.getFirstName() + " " + user.getLastName()
-				: user.getEmail();
+		//build receiver
+		String receiver = "";
 		return new StringBuilder()
 				.append("<h3>Hello " + receiver + ".</h3>")
 				.append("<span>This email confirms that you successfully completed registration in our system.</span><br>")
@@ -84,14 +83,13 @@ public class MailServiceImpl implements MailService {
 	}
 
 	private String buildSignUpConfirmationMessage(User user) {
-		String receiver = (user.getFirstName() != null && user.getLastName() != null)
-				? user.getFirstName() + " " + user.getLastName()
-				: user.getEmail();
+		//build receiver
+		String receiver = "";
 		return new StringBuilder()
 				.append("<h3>Hello " + receiver + ".</h3>")
 				.append("<span>This email confirms that you were successfully registered in our system.</span><br>")
 				.append("<span>To verify your account please click the button bellow. This link will expire in 24 hours.</span><br><br>")
-				.append("<form action=" + verificationUrl + user.getId().toHexString() + ">" +
+				.append("<form action=" + verificationUrl + ">" +
 						"<button style=\"background-color: #14467d; color: white; height: 35px; width: 175px; border-radius: 50px; border: none; font-weight: bold; font-size: 15px\" type=\"submit\">Verify my account</button></form><br>")
 				.append("<span>Thank you joining us.</span><br>")
 				.toString();

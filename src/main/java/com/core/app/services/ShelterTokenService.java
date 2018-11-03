@@ -1,25 +1,24 @@
 package com.core.app.services;
 
+import com.core.app.entities.database.shelter.ShelterAdmin;
 import com.core.app.entities.database.shelter.ShelterTokenEntity;
-import com.core.app.entities.database.user.TokenEntity;
 import org.bson.types.ObjectId;
 
 import java.util.concurrent.CompletableFuture;
 
-public interface TokenService {
+public interface ShelterTokenService {
 
-    String createToken(ShelterTokenEntity user);
+    String createToken(ShelterAdmin user);
 
-    ObjectId getUserIdFromToken(String token);
+    ObjectId getShelterIdFromToken(String token);
 
     boolean isTokenValid(String token);
 
-    TokenEntity save(String token, ObjectId userId);
+    ShelterTokenEntity save(String token, ObjectId userId);
 
     CompletableFuture<Void> updateTokenExpirationTime(String token);
 
     void deleteToken(String token);
 
     void deleteUserTokens(ObjectId userId);
-
 }

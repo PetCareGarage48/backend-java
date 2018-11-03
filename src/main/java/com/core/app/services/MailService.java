@@ -1,7 +1,6 @@
 package com.core.app.services;
 
-
-import com.core.app.entities.database.User;
+import com.core.app.entities.database.user.User;
 
 import java.util.concurrent.CompletableFuture;
 

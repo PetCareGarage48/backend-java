@@ -27,5 +27,4 @@ public class Shelter {
     private ArrayList<Requirement> requirements;
     private WorkingHours workingHours;
     private String email;
-    private ArrayList<ObjectId> pets;
 }
