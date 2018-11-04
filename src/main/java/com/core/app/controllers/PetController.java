@@ -104,14 +104,14 @@ public class PetController {
 
     @ApiOperation(value = "Get page of pets")
     @GetMapping("/pet")
-    public ResponseEntity<Response> getPet(@RequestParam ObjectId id, int size, int page) {
-        Iterable<Pet> pets = petService.findById(id, size, page);
+    public ResponseEntity<Response> getPet(@RequestParam String id, int size, int page) {
+        Iterable<Pet> pets = petService.findById(new ObjectId(id), size, page);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
     @ApiOperation(value = "Get list of pets by status")
     @GetMapping("/pet/status")
-    public ResponseEntity<Response> getPetByStatus(@RequestParam ObjectId id) {
+    public ResponseEntity<Response> getPetByStatus(@RequestParam String id) {
         List<Pet> pets = petService.findByStatus(AdoptionStatus.NOT_ADOPT);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of not adopted pets", pets);
 
@@ -119,9 +119,9 @@ public class PetController {
 
     @ApiOperation(value = "Adopt a pet")
     @PostMapping("/pet/adopt")
-    public ResponseEntity<Response> adoptPet(@RequestParam ObjectId id, @RequestBody Adoption adoption, HttpServletRequest request) {
+    public ResponseEntity<Response> adoptPet(@RequestParam String id, @RequestBody Adoption adoption, HttpServletRequest request) {
         ObjectId userId = tokenService.getUserIdFromToken(Helper.getTokenFromHeader(request));
-        Pet pet = petService.findById(id).get();
+        Pet pet = petService.findById(new ObjectId(id)).get();
         pet.setStatus(AdoptionStatus.IN_PROGRESS);
         pet.setAdoptions(adoption);
         pet.getAdoptions().setUserId(userId);
