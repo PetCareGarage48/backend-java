@@ -28,6 +28,6 @@ public class Shelter {
     private String paymentInfo;
     private ArrayList<String> photos;
     private ArrayList<Requirement> requirements;
-    private WorkingHours workingHours;
+    private ArrayList<WorkingHours> workingHours;
     private String email;
 }
