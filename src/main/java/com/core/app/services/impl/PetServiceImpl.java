@@ -1,6 +1,7 @@
 package com.core.app.services.impl;
 
 import com.core.app.entities.database.pet.Pet;
+import com.core.app.entities.enums.AdoptionStatus;
 import com.core.app.repositories.PetRepository;
 import com.core.app.services.PetService;
 import org.bson.types.ObjectId;
@@ -54,8 +55,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> findByStatus(int id) {
-        return petRepository.findByStatus(id);
+    public List<Pet> findByStatus(AdoptionStatus status) {
+        return petRepository.findByStatus(status.ordinal());
     }
 
 }

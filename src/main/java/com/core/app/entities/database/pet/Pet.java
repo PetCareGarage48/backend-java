@@ -1,6 +1,7 @@
 package com.core.app.entities.database.pet;
 
 import com.core.app.entities.database.user.Adoption;
+import com.core.app.entities.enums.AdoptionStatus;
 import com.core.app.entities.enums.Gender;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -32,7 +33,7 @@ public class Pet {
     private String type;
     private Gender gender;
     private int age;
-    private int status;
+    private AdoptionStatus status;
     private ArrayList<String> photos;
     private ArrayList<Adoption> adoptions;
 }

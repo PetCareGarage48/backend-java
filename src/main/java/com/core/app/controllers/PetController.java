@@ -3,6 +3,7 @@ package com.core.app.controllers;
 
 import com.core.app.entities.database.pet.Pet;
 import com.core.app.entities.dto.Response;
+import com.core.app.entities.enums.AdoptionStatus;
 import com.core.app.services.PetService;
 import com.core.app.services.TokenService;
 import com.core.app.utils.Helper;
@@ -32,8 +33,6 @@ public class PetController {
     private final PetService petService;
     private final TokenService tokenService;
 
-    private final static int NOT_ADOPT = 0;
-
     public PetController(PetService petService, TokenService tokenService) {
         this.petService = petService;
         this.tokenService = tokenService;
@@ -48,8 +47,8 @@ public class PetController {
 
     @ApiOperation(value = "Get all pets with status")
     @GetMapping
-    public ResponseEntity<Response> findAllPetsByStatus(@RequestParam int id) {
-        List<Pet> pets = petService.findByStatus(id);
+    public ResponseEntity<Response> findAllPetsByStatus(@RequestParam AdoptionStatus status) {
+        List<Pet> pets = petService.findByStatus(status);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
@@ -120,7 +119,7 @@ public class PetController {
     @ApiOperation(value = "Get page of pets")
     @GetMapping("/pet/status")
     public ResponseEntity<Response> getPetByStatus(@RequestParam ObjectId id) {
-        List<Pet> pets = petService.findByStatus(NOT_ADOPT);
+        List<Pet> pets = petService.findByStatus(AdoptionStatus.NOT_ADOPT);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of not adopted pets", pets);
 
     }
