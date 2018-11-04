@@ -32,6 +32,8 @@ public class PetController {
     private final PetService petService;
     private final TokenService tokenService;
 
+    private final static int NOT_ADOPT = 0;
+
     public PetController(PetService petService, TokenService tokenService) {
         this.petService = petService;
         this.tokenService = tokenService;
@@ -41,6 +43,13 @@ public class PetController {
     @GetMapping
     public ResponseEntity<Response> findAllPets() {
         Iterable<Pet> pets = petService.findAll();
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
+    }
+
+    @ApiOperation(value = "Get all pets with status")
+    @GetMapping
+    public ResponseEntity<Response> findAllPetsByStatus(@RequestParam int id) {
+        List<Pet> pets = petService.findByStatus(id);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
@@ -106,6 +115,14 @@ public class PetController {
     public ResponseEntity<Response> getPet(@RequestParam ObjectId id, int size, int page) {
         Iterable<Pet> pets = petService.findById(id, size, page);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
+    }
+
+    @ApiOperation(value = "Get page of pets")
+    @GetMapping("/pet/status")
+    public ResponseEntity<Response> getPetByStatus(@RequestParam ObjectId id) {
+        List<Pet> pets = petService.findByStatus(NOT_ADOPT);
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "List of not adopted pets", pets);
+
     }
 
 }

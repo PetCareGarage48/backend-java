@@ -32,6 +32,7 @@ public class Pet {
     private String type;
     private Gender gender;
     private int age;
+    private int status;
     private ArrayList<String> photos;
     private ArrayList<Adoption> adoptions;
 }

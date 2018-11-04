@@ -53,4 +53,9 @@ public class PetServiceImpl implements PetService {
         return petRepository.findById(id, new PageRequest(page, size));
     }
 
+    @Override
+    public List<Pet> findByStatus(int id) {
+        return petRepository.findByStatus(id);
+    }
+
 }

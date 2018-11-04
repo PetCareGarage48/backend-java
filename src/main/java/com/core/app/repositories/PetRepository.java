@@ -19,4 +19,5 @@ public interface PetRepository extends PagingAndSortingRepository<Pet, ObjectId>
 
     Page<Pet> findById(ObjectId id, Pageable pageable);
 
+    List<Pet> findByStatus(int status);
 }
