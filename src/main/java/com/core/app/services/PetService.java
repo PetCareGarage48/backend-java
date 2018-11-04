@@ -22,7 +22,5 @@ public interface PetService {
 
     Iterable<Pet> findAll();
 
-    Page<Pet> findPets(int count, Pageable pageable);
-
-
+    Page<Pet> findById(ObjectId id, Pageable pageable);
 }

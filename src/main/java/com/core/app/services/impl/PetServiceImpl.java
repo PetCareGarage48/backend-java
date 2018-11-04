@@ -22,7 +22,6 @@ public class PetServiceImpl implements PetService {
         this.petRepository = petRepository;
     }
 
-
     public Pet save(Pet pet) {
         return petRepository.save(pet);
     }
@@ -48,8 +47,9 @@ public class PetServiceImpl implements PetService {
         return petRepository.findAll();
     }
 
-    public Page<Pet> findPets(int count, Pageable pageable) {
-        return petRepository.findPets(count, pageable);
+    @Override
+    public Page<Pet> findById(ObjectId id, Pageable pageable) {
+        return petRepository.findById(id, pageable);
     }
 
 }

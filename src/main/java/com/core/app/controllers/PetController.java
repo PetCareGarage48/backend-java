@@ -9,6 +9,7 @@ import com.core.app.utils.Helper;
 import io.swagger.annotations.ApiOperation;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,8 +71,9 @@ public class PetController {
         return Helper.buildHttpResponse(HttpStatus.FORBIDDEN, true, "You are not admin in this shelter", null);
     }
 
+    @ApiOperation(value = "Save image of pet")
     @PostMapping("/pet/photo/save")
-    public ResponseEntity<Response> save(String id, @RequestParam MultipartFile multipartFile) {
+    public ResponseEntity<Response> save(@RequestParam String id, @RequestParam MultipartFile multipartFile) {
 
         File convFile = new File(multipartFile.getOriginalFilename());
         Path path = null;
@@ -96,8 +98,14 @@ public class PetController {
 
         petService.save(pet);
 
-        return Helper.buildHttpResponse(HttpStatus.CREATED, false, "Pet is created", pet);
+        return Helper.buildHttpResponse(HttpStatus.CREATED, false, "Image is saved of pet: " + pet.getName(), pet);
+    }
 
+    @ApiOperation(value = "Get page of pets")
+    @GetMapping("/pet/")
+    public ResponseEntity<Response> getPet(@RequestParam ObjectId id, Pageable pageable) {
+        Iterable<Pet> pets = petService.findById(id, pageable);
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
 }
