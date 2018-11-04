@@ -119,14 +119,13 @@ public class PetController {
 
     @ApiOperation(value = "Adopt a pet")
     @PostMapping("/pet/adopt")
-    public ResponseEntity<Response> adoptPet(@RequestBody ObjectId id, @RequestBody Adoption adoption, HttpServletRequest request) {
+    public ResponseEntity<Response> adoptPet(@RequestParam ObjectId id, @RequestBody Adoption adoption, HttpServletRequest request) {
         ObjectId userId = tokenService.getUserIdFromToken(Helper.getTokenFromHeader(request));
         Pet pet = petService.findById(id).get();
         pet.setStatus(AdoptionStatus.IN_PROGRESS);
         pet.setAdoptions(adoption);
         pet.getAdoptions().setUserId(userId);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "Pet is in progress of adoption", pet);
-
     }
 
 }
