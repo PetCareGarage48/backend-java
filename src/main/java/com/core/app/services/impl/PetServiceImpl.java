@@ -6,6 +6,7 @@ import com.core.app.services.PetService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +49,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Page<Pet> findById(ObjectId id, Pageable pageable) {
-        return petRepository.findById(id, pageable);
+    public Page<Pet> findById(ObjectId id, int size, int page) {
+        return petRepository.findById(id, new PageRequest(page, size));
     }
 
 }
