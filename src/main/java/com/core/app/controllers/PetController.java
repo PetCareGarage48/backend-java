@@ -102,7 +102,7 @@ public class PetController {
     }
 
     @ApiOperation(value = "Get page of pets")
-    @GetMapping("/pet/")
+    @GetMapping("/pet")
     public ResponseEntity<Response> getPet(@RequestParam ObjectId id, Pageable pageable) {
         Iterable<Pet> pets = petService.findById(id, pageable);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
