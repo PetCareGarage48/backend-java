@@ -2,6 +2,7 @@ package com.core.app.controllers;
 
 
 import com.core.app.entities.database.pet.Pet;
+import com.core.app.entities.database.user.Adoption;
 import com.core.app.entities.dto.Response;
 import com.core.app.entities.enums.AdoptionStatus;
 import com.core.app.services.PetService;
@@ -10,7 +11,6 @@ import com.core.app.utils.Helper;
 import io.swagger.annotations.ApiOperation;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,13 +42,6 @@ public class PetController {
     @GetMapping
     public ResponseEntity<Response> findAllPets() {
         Iterable<Pet> pets = petService.findAll();
-        return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
-    }
-
-    @ApiOperation(value = "Get all pets with status")
-    @GetMapping
-    public ResponseEntity<Response> findAllPetsByStatus(@RequestParam AdoptionStatus status) {
-        List<Pet> pets = petService.findByStatus(status);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
@@ -116,11 +109,23 @@ public class PetController {
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of pets", pets);
     }
 
-    @ApiOperation(value = "Get page of pets")
+    @ApiOperation(value = "Get list of pets by status")
     @GetMapping("/pet/status")
     public ResponseEntity<Response> getPetByStatus(@RequestParam ObjectId id) {
         List<Pet> pets = petService.findByStatus(AdoptionStatus.NOT_ADOPT);
         return Helper.buildHttpResponse(HttpStatus.OK, false, "List of not adopted pets", pets);
+
+    }
+
+    @ApiOperation(value = "Adopt a pet")
+    @PostMapping("/pet/adopt")
+    public ResponseEntity<Response> adoptPet(@RequestBody ObjectId id, @RequestBody Adoption adoption, HttpServletRequest request) {
+        ObjectId userId = tokenService.getUserIdFromToken(Helper.getTokenFromHeader(request));
+        Pet pet = petService.findById(id).get();
+        pet.setStatus(AdoptionStatus.IN_PROGRESS);
+        pet.setAdoptions(adoption);
+        pet.getAdoptions().setUserId(userId);
+        return Helper.buildHttpResponse(HttpStatus.OK, false, "Pet is in progress of adoption", pet);
 
     }
 

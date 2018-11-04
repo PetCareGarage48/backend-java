@@ -35,5 +35,5 @@ public class Pet {
     private int age;
     private AdoptionStatus status;
     private ArrayList<String> photos;
-    private ArrayList<Adoption> adoptions;
+    private Adoption adoptions;
 }

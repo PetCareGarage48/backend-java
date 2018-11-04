@@ -49,7 +49,7 @@ public class ShelterServiceImpl implements ShelterService {
                 .photos(new ArrayList<>())
                 .title("None")
                 .requirements(new ArrayList<>())
-                .workingHours(new WorkingHours())
+                .workingHours(new ArrayList<>())
                 .build();
     }
 }
