@@ -2,7 +2,6 @@ package com.core.app.controllers;
 
 
 import com.core.app.entities.database.pet.Pet;
-import com.core.app.entities.database.shelter.Shelter;
 import com.core.app.entities.dto.Response;
 import com.core.app.services.PetService;
 import com.core.app.services.TokenService;
@@ -13,6 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +68,36 @@ public class PetController {
             }
         }
         return Helper.buildHttpResponse(HttpStatus.FORBIDDEN, true, "You are not admin in this shelter", null);
+    }
+
+    @PostMapping("/pet/photo/save")
+    public ResponseEntity<Response> save(String id, @RequestParam MultipartFile multipartFile) {
+
+        File convFile = new File(multipartFile.getOriginalFilename());
+        Path path = null;
+        try {
+            multipartFile.transferTo(convFile);
+            byte[] bytes = multipartFile.getBytes();
+            path = Paths.get("C://hackathon//" + multipartFile.getOriginalFilename());
+            Files.write(path, bytes);
+
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Something is wrong with your pictures.");
+        }
+
+        Pet pet = petService.findById(new ObjectId(id)).get();
+        List<String> urls = pet.getPhotos();
+
+        try {
+            urls.add(convFile.toURI().toURL().toString());
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("Something is wrong with your pictures.");
+        }
+
+        petService.save(pet);
+
+        return Helper.buildHttpResponse(HttpStatus.CREATED, false, "Pet is created", pet);
+
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PetServiceImpl implements PetService {
@@ -36,6 +37,10 @@ public class PetServiceImpl implements PetService {
 
     public List<Pet> findByName(String name) {
         return petRepository.findByName(name);
+    }
+
+    public Optional<Pet> findById(ObjectId objectId) {
+        return petRepository.findById(objectId);
     }
 
     @Override

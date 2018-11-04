@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PetService {
 
@@ -16,6 +17,8 @@ public interface PetService {
     List<Pet> findByShelter(ObjectId objectId);
 
     List<Pet> findByName(String name);
+
+    Optional<Pet> findById(ObjectId objectId);
 
     Iterable<Pet> findAll();
 
